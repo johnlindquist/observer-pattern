@@ -1,6 +1,5 @@
 const observer = {
   notify(value) {
-    //notify is named `next` in RxJS
     console.log(`new value received`, value)
   }
 }
