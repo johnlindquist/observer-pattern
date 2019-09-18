@@ -1,5 +1,6 @@
 const observer = {
-  notify(value) {
+  //Renamed `notify` to `next` to match RxJS
+  next(value) {
     console.log(`new value received`, value)
   }
 }
@@ -11,10 +12,10 @@ const createObservable = subscribe => {
 }
 
 const subscribe = observer => {
-  document.addEventListener("click", observer.notify)
+  document.addEventListener("click", observer.next)
 
   const unsubscribe = () => {
-    document.removeEventListener("click", observer.notify)
+    document.removeEventListener("click", observer.next)
   }
 
   return unsubscribe
