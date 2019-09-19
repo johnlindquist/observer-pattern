@@ -36,7 +36,6 @@ const subject = createSubject()
 const oneUnsubscribe = subject.subscribe(oneObserver)
 const twoUnsubscribe = subject.subscribe(twoObserver)
 
-oneUnsubscribe()
-
 subject.next({ message: "Hello" })
+oneUnsubscribe()
 subject.next({ message: "Goodbye" })
