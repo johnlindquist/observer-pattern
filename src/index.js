@@ -5,7 +5,14 @@ const next = value => {
 const observable = {
   subscribe: next => {
     next("hello")
+  },
+  pipe(operator) {
+    return operator(this)
   }
 }
 
-observable.subscribe(next)
+const operator = observable => {
+  return observable
+}
+
+observable.pipe(operator).subscribe(next)
