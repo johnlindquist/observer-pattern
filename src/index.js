@@ -1,13 +1,21 @@
 const observer = {
-  //Renamed `notify` to `next` to match RxJS
   next(value) {
     console.log(`new value received`, value)
   }
 }
 
-const createObservable = subscribe => {
+const createSubject = subscribe => {
+  let intervalObserver
+  const internalSubscribe = observer => {
+    intervalObserver = observer
+    subscribe(observer)
+  }
+
   return {
-    subscribe
+    subscribe: internalSubscribe,
+    next: value => {
+      intervalObserver.next(value)
+    }
   }
 }
 
@@ -21,7 +29,7 @@ const subscribe = observer => {
   return unsubscribe
 }
 
-const observable = createObservable(subscribe)
+const subject = createSubject(subscribe)
+subject.subscribe(observer)
 
-const unsubscribe = observable.subscribe(observer)
-//unsubscribe
+subject.next({ message: "Hello" })
