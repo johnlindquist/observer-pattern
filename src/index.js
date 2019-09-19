@@ -10,6 +10,22 @@ const twoObserver = {
   }
 }
 
+const createObservable = subscribe => {
+  return {
+    subscribe
+  }
+}
+
+const subscribe = observer => {
+  document.addEventListener("click", observer.next)
+
+  const unsubscribe = () => {
+    document.removeEventListener("click", observer.next)
+  }
+
+  return unsubscribe
+}
+
 const createSubject = () => {
   let observers = []
 
@@ -33,9 +49,8 @@ const createSubject = () => {
 }
 
 const subject = createSubject()
-const oneUnsubscribe = subject.subscribe(oneObserver)
-const twoUnsubscribe = subject.subscribe(twoObserver)
+const observable = createObservable(subscribe)
 
-subject.next({ message: "Hello" })
-oneUnsubscribe()
-subject.next({ message: "Goodbye" })
+subject.subscribe(oneObserver)
+subject.subscribe(twoObserver)
+observable.subscribe(subject)
