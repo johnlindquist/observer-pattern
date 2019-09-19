@@ -34,7 +34,7 @@ const createSubject = () => {
 
 const subject = createSubject()
 const oneUnsubscribe = subject.subscribe(oneObserver)
-subject.subscribe(twoObserver)
+const twoUnsubscribe = subject.subscribe(twoObserver)
 
 oneUnsubscribe()
 
