@@ -16,6 +16,13 @@ const createSubject = () => {
   return {
     subscribe: observer => {
       observers.push(observer)
+
+      const unsubscribe = () => {
+        const index = observers.indexOf(observer)
+        observers.splice(index, 1)
+      }
+
+      return unsubscribe
     },
     next: value => {
       observers.forEach(observer => {
@@ -26,8 +33,10 @@ const createSubject = () => {
 }
 
 const subject = createSubject()
-subject.subscribe(oneObserver)
+const oneUnsubscribe = subject.subscribe(oneObserver)
 subject.subscribe(twoObserver)
+
+oneUnsubscribe()
 
 subject.next({ message: "Hello" })
 subject.next({ message: "Goodbye" })
