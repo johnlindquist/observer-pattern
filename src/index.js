@@ -11,14 +11,16 @@ const twoObserver = {
 }
 
 const createSubject = () => {
-  let intervalObserver
+  let observers = []
 
   return {
     subscribe: observer => {
-      intervalObserver = observer
+      observers.push(observer)
     },
     next: value => {
-      intervalObserver.next(value)
+      observers.forEach(observer => {
+        observer.next(value)
+      })
     }
   }
 }
