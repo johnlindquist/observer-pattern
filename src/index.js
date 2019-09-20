@@ -1,18 +1,7 @@
-const next = value => {
-  console.log(value)
-}
+import { fromEvent } from "rxjs"
 
-const observable = {
-  subscribe: next => {
-    next("hello")
-  },
-  pipe(operator) {
-    return operator(this)
-  }
-}
-
-const operator = observable => {
-  return observable
-}
-
-observable.pipe(operator).subscribe(next)
+fromEvent(document, "click")
+  .pipe()
+  .subscribe(value => {
+    console.log(value)
+  })
