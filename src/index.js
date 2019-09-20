@@ -1,7 +1,13 @@
-import { fromEvent } from "rxjs"
+import { fromEvent, of } from "rxjs"
 
-fromEvent(document, "click")
-  .pipe()
+const hi = of("hi")
+
+const click = fromEvent(document, "click")
+
+click
+  .pipe(observable => {
+    return hi
+  })
   .subscribe(value => {
     console.log(value)
   })
