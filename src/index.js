@@ -1,26 +1,14 @@
-const next = value => {
-  console.log(value)
-}
+import { fromEvent, pipe } from "rxjs"
+import { switchMap, pluck } from "rxjs/operators"
+import { ajax } from "rxjs/ajax"
 
-const observable = {
-  subscribe: next => {
-    next("hello")
-  },
-  pipe(...operators) {
-    return operators.reduce((observable, fn) => {
-      return fn(observable)
-    }, this)
-  }
-}
+const button = document.querySelector("#button")
 
-const operator = observable => {
-  return observable
-}
+const click$ = fromEvent(button, "click")
 
-observable
-  .pipe(
-    operator,
-    operator,
-    operator
-  )
-  .subscribe(next)
+const switchToLuke = pipe(
+  switchMap(event => ajax("https://starwars.egghead.training/people/1")),
+  pluck("response")
+)
+
+switchToLuke(click$).subscribe(console.log)
